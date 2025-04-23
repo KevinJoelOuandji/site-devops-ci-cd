@@ -1,0 +1,23 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Test') {
+            steps {
+                echo '✅ Étape de test réussie !'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo '🔨 Construction (build) terminée avec succès !'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo '🚀 Déploiement fictif terminé !'
+            }
+        }
+    }
+}

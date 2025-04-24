@@ -2,33 +2,40 @@ pipeline {
     agent any
 
     stages {
-        stage('Tests') {
+        stage('Cloner le dépôt') {
             steps {
-                echo '🧪 Lancement des tests HTMLHint et Stylelint...'
-                sh 'npm install'  // Installe les dépendances déclarées dans package.json
-                sh 'npm test'     // Exécute le script "test" défini dans package.json
+                git branch: 'main', url: 'https://github.com/KevinJoelOuandji/site-devops-ci-cd.git'
             }
         }
 
-        stage('Build') {
+        stage('Construire l’image Docker') {
             steps {
-                echo '🔨 Étape de construction terminée (rien à construire pour un projet HTML/CSS/JS simple)'
+                script {
+                    docker.build('devops-demo')
+                }
             }
         }
 
-        stage('Deploy') {
+        stage('Lancer les tests') {
             steps {
-                echo '🚀 Étape de déploiement fictif (à connecter plus tard avec Netlify ou autre outil)'
+                script {
+                    docker.image('devops-demo').inside {
+                        echo '🧪 Installation des dépendances et lancement des tests...'
+                        sh 'npm install' // Installe les dépendances déclarées dans package.json
+                        sh 'npm test' // Exécute le script "test" défini dans package.json
+                    }
+                }
             }
         }
+
     }
 
     post {
-        success {
-            echo "✅ Pipeline terminé avec succès !"
-        }
         failure {
-            echo "❌ Le pipeline a échoué. Vérifiez les logs ci-dessus."
+            echo "❌ Le pipeline a échoué."
+        }
+        success {
+            echo "✅ Tous les tests ont réussi !"
         }
     }
 }

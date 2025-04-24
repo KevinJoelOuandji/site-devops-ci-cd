@@ -1,0 +1,26 @@
+{
+  "name": "devops_demo_simple",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "test": "npx htmlhint ./index.html && npx stylelint style.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KevinJoelOuandji/site-devops-ci-cd.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/KevinJoelOuandji/site-devops-ci-cd/issues"
+  },
+  "homepage": "https://github.com/KevinJoelOuandji/site-devops-ci-cd#readme",
+  "devDependencies": {
+    "htmlhint": "^1.1.4",
+    "stylelint": "^16.19.0",
+    "stylelint-config-standard": "^38.0.0"
+  }
+}

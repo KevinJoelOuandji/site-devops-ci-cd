@@ -2,22 +2,40 @@ pipeline {
     agent any
 
     stages {
-        stage('Test') {
+        stage('Cloner le dépôt') {
             steps {
-                echo '✅ Étape de test réussie !'
+                git 'https://github.com/KevinJoelOuandji/site-devops-ci-cd.git'
             }
         }
 
-        stage('Build') {
+        stage('Construire l’image Docker') {
             steps {
-                echo '🔨 Construction (build) terminée avec succès !'
+                script {
+                    docker.build('devops-demo')
+                }
             }
         }
 
-        stage('Deploy') {
+        stage('Lancer les tests') {
             steps {
-                echo '🚀 Déploiement fictif terminé !'
+                script {
+                    docker.image('devops-demo').inside {
+                        echo '🧪 Installation des dépendances et lancement des tests...'
+                        sh 'npm install' // ← cette ligne est nouvelle
+                        sh 'npm test'
+                    }
+                }
             }
+        }
+
+    }
+
+    post {
+        failure {
+            echo "❌ Le pipeline a échoué."
+        }
+        success {
+            echo "✅ Tous les tests ont réussi !"
         }
     }
 }

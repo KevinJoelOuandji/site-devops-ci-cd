@@ -27,6 +27,12 @@ pipeline {
                 }
             }
         }
+        stage('Nettoyage') {
+            steps {
+                sh 'docker rmi devops-demo || true' // Supprimer l’image Docker afin de garder le système propre
+            }
+        }
+
 
     }
 

@@ -1,0 +1,18 @@
+# Ignorer les fichiers et dossiers créés par Jenkins
+jenkins_home/
+
+# Ignorer les fichiers logs en général
+*.log
+
+# Ignorer les fichiers système de Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Ignorer les fichiers temporaires
+*.tmp
+*.swp
+*.bak
+
+# Ignorer les fichiers Node.js si jamais
+node_modules/

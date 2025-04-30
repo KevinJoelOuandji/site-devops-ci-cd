@@ -1,0 +1,47 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Cloner le dépôt') {
+            steps {
+                git branch: 'main', url: 'https://github.com/KevinJoelOuandji/site-devops-ci-cd.git'
+            }
+        }
+
+        stage('Construire l’image Docker') {
+            steps {
+                script {
+                    docker.build('devops-demo')
+                }
+            }
+        }
+
+        stage('Lancer les tests') {
+            steps {
+                script {
+                    docker.image('devops-demo').inside {
+                        echo '🧪 Installation des dépendances et lancement des tests...'
+                        sh 'npm install' // Installe les dépendances déclarées dans package.json
+                        sh 'npm test' // Exécute le script "test" défini dans package.json
+                    }
+                }
+            }
+        }
+        stage('Nettoyage') {
+            steps {
+                sh 'docker rmi devops-demo || true' // Supprimer l’image Docker afin de garder le système propre
+            }
+        }
+
+
+    }
+
+    post {
+        failure {
+            echo "❌ Le pipeline a échoué."
+        }
+        success {
+            echo "✅ Tous les tests ont réussi !"
+        }
+    }
+}

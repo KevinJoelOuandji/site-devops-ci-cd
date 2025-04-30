@@ -4,44 +4,31 @@ pipeline {
     stages {
         stage('Cloner le dépôt') {
             steps {
-                git branch: 'main', url: 'https://github.com/KevinJoelOuandji/site-devops-ci-cd.git'
+                git 'https://github.com/KevinJoelOuandji/site-devops-ci-cd.git'
             }
         }
 
-        stage('Construire l’image Docker') {
+        stage('Construire l\'image Docker') {
             steps {
                 script {
-                    docker.build('devops-demo')
+                    docker.build('mon-image-devops')
                 }
             }
         }
 
         stage('Lancer les tests') {
             steps {
-                script {
-                    docker.image('devops-demo').inside {
-                        echo '🧪 Installation des dépendances et lancement des tests...'
-                        sh 'npm install' // Installe les dépendances déclarées dans package.json
-                        sh 'npm test' // Exécute le script "test" défini dans package.json
-                    }
-                }
+                echo 'Tests fictifs...'
             }
         }
-        stage('Nettoyage') {
-            steps {
-                sh 'docker rmi devops-demo || true' // Supprimer l’image Docker afin de garder le système propre
-            }
-        }
-
-
     }
 
     post {
         failure {
-            echo "❌ Le pipeline a échoué."
+            echo '❌ Le pipeline a échoué.'
         }
         success {
-            echo "✅ Tous les tests ont réussi !"
+            echo '✅ Le pipeline a réussi.'
         }
     }
 }

@@ -26,7 +26,7 @@ pipeline {
             steps {
                 echo '🔨 Construction de l’image Docker locale...'
                 script {
-                    docker.build("${env.IMAGE_NAME}")
+                    //docker.build("${env.IMAGE_NAME}")
                 }
             }
         }

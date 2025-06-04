@@ -36,7 +36,7 @@ pipeline {
                 echo '🔍 Analyse de code avec htmlhint et stylelint...'
                 script {
                     // 📦 On exécute les commandes à l’intérieur du conteneur Docker
-                    docker.image("${env.IMAGE_NAME}").inside {
+                    //docker.image("${env.IMAGE_NAME}").inside {
                         sh 'npm install' // Installe les dépendances (htmlhint, stylelint)
                         sh 'npx htmlhint index.html' // Analyse HTML
                         sh 'npx stylelint "**/*.css"' // Analyse CSS (tous les fichiers CSS)
